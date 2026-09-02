@@ -281,11 +281,7 @@ export async function recordFreeMonthlyCost(
 
   const redis = createRedisClient();
   if (!redis) {
-    if (process.env.NODE_ENV !== "production") return;
-    throw new ChatSDKError(
-      "rate_limit:chat",
-      "Rate limiting service is not configured",
-    );
+    return;
   }
 
   const { bucket, ttlMs } = getCurrentUtcMonthWindow();
