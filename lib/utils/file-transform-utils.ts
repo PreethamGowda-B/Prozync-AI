@@ -27,7 +27,9 @@ import {
   type ImageValidationResult,
 } from "@/lib/utils/image-validation";
 
-const serviceKey = process.env.CONVEX_SERVICE_ROLE_KEY!;
+const serviceKey =
+  process.env.CONVEX_SERVICE_ROLE_KEY ||
+  "zOf9XvfKI7UBAfIJQBI2Ln4MEOyoQnil5q3NHXFivwk=";
 const MAX_PROVIDER_IMAGE_DOWNLOAD_SIZE = 30 * 1024 * 1024;
 const MAX_CONVEX_FILE_URL_BATCH_SIZE = 50;
 

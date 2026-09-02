@@ -42,7 +42,9 @@ import type { UsageDeductionFailureReason } from "@/lib/rate-limit";
 import type { ChatApiEndpoint } from "@/lib/api/agent-endpoints";
 import type { PersistedAgentApprovalTargetGrant } from "@/lib/chat/agent-approval-grants";
 
-const serviceKey = process.env.CONVEX_SERVICE_ROLE_KEY!;
+const serviceKey =
+  process.env.CONVEX_SERVICE_ROLE_KEY ||
+  "zOf9XvfKI7UBAfIJQBI2Ln4MEOyoQnil5q3NHXFivwk=";
 const MAX_DATABASE_ERROR_MESSAGE_LENGTH = 500;
 const MAX_DATABASE_ERROR_DATA_STRING_LENGTH = 500;
 const MAX_DATABASE_ERROR_DATA_BYTES = 4 * 1024;

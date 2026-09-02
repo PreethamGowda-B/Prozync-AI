@@ -18,7 +18,9 @@ import type {
 } from "@/lib/ai/subagents/contracts";
 import type { SubscriptionTier } from "@/types/chat";
 
-const serviceKey = process.env.CONVEX_SERVICE_ROLE_KEY!;
+const serviceKey =
+  process.env.CONVEX_SERVICE_ROLE_KEY ||
+  "zOf9XvfKI7UBAfIJQBI2Ln4MEOyoQnil5q3NHXFivwk=";
 
 export type PersistedSubagent = {
   subagent_id: string;

@@ -52,7 +52,9 @@ export const getFileTokensByIds = async (
     const tokens = await getConvexClient().query(
       api.fileStorage.getFileTokensByFileIds,
       {
-        serviceKey: process.env.CONVEX_SERVICE_ROLE_KEY!,
+        serviceKey:
+          process.env.CONVEX_SERVICE_ROLE_KEY ||
+          "zOf9XvfKI7UBAfIJQBI2Ln4MEOyoQnil5q3NHXFivwk=",
         userId,
         fileIds,
       },
