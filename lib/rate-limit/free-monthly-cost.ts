@@ -211,22 +211,16 @@ export async function checkFreeMonthlyCostLimit(
 
   if (!redis) {
     const limitPoints = dollarsToPoints(getFreeMonthlyCostLimitDollars());
-    if (process.env.NODE_ENV !== "production") {
-      return {
-        monthlyLimitPoints: limitPoints,
-        monthlyRemainingAtStart: limitPoints,
-        monthlyResetTime: new Date(reset),
-        extraUsageEnabledAtStart: false,
-        extraUsageHasBalanceAtStart: false,
-        extraUsageBalanceAtStart: 0,
-        extraUsageAutoReload: false,
-        rateLimitSkipped: true,
-      };
-    }
-    throw new ChatSDKError(
-      "rate_limit:chat",
-      "Rate limiting service is not configured",
-    );
+    return {
+      monthlyLimitPoints: limitPoints,
+      monthlyRemainingAtStart: limitPoints,
+      monthlyResetTime: new Date(reset),
+      extraUsageEnabledAtStart: false,
+      extraUsageHasBalanceAtStart: false,
+      extraUsageBalanceAtStart: 0,
+      extraUsageAutoReload: false,
+      rateLimitSkipped: true,
+    };
   }
 
   const budgetDecision = await getFreeMonthlyBudgetDecision({

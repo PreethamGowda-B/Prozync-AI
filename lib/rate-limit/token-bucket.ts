@@ -859,11 +859,7 @@ export const checkTokenBucketLimit = async (
   const redis = createRedisClient();
 
   if (!redis) {
-    if (process.env.NODE_ENV === "production") {
-      throwRateLimitServiceNotConfigured();
-    }
-
-    // Skip rate limiting if Redis is not configured in local dev/test.
+    // Skip rate limiting if Redis is not configured
     const { monthly } = getBudgetLimits(subscription);
     return {
       remaining: monthly,
@@ -1192,10 +1188,7 @@ export const deductUsageDelta = async (
 ): Promise<UsageDeductionResult> => {
   const redis = createRedisClient();
   if (!redis) {
-    if (process.env.NODE_ENV !== "production") {
-      return emptyUsageDeductionResult();
-    }
-    throwRateLimitServiceNotConfigured();
+    return emptyUsageDeductionResult();
   }
 
   try {
@@ -1257,10 +1250,7 @@ export const deductUsage = async (
 ): Promise<UsageDeductionResult> => {
   const redis = createRedisClient();
   if (!redis) {
-    if (process.env.NODE_ENV !== "production") {
-      return emptyUsageDeductionResult();
-    }
-    throwRateLimitServiceNotConfigured();
+    return emptyUsageDeductionResult();
   }
 
   let lastKnownDeductionResult = emptyUsageDeductionResult();

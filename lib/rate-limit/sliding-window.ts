@@ -171,10 +171,7 @@ export const grantFreeReferralBonusUnits = async (
 
   const redis = createRedisClient();
   if (!redis) {
-    if (process.env.NODE_ENV !== "production") {
-      return { granted: true, units: bonusUnits, rateLimitSkipped: true };
-    }
-    return { granted: false, units: 0 };
+    return { granted: true, units: bonusUnits, rateLimitSkipped: true };
   }
 
   const bonusKey = getFreeReferralBonusKey(userId);
@@ -207,19 +204,13 @@ export const checkFreeUserRateLimit = async (
   const { bucket, reset, ttlMs } = getCurrentUtcDayWindow();
 
   if (!redis) {
-    if (process.env.NODE_ENV !== "production") {
-      // Skip rate limiting in local dev/test when Redis is not configured
-      return {
-        remaining: requestLimit,
-        resetTime: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        limit: requestLimit,
-        rateLimitSkipped: true,
-      };
-    }
-    throw new ChatSDKError(
-      "rate_limit:chat",
-      "Rate limiting service is not configured",
-    );
+    // Skip rate limiting when Redis is not configured
+    return {
+      remaining: requestLimit,
+      resetTime: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      limit: requestLimit,
+      rateLimitSkipped: true,
+    };
   }
 
   try {

@@ -28,16 +28,10 @@ export async function acquireFreeRunConcurrencyLock(
   const redis = createRedisClient();
 
   if (!redis) {
-    if (process.env.NODE_ENV !== "production") {
-      return {
-        rateLimitSkipped: true,
-        release: async () => {},
-      };
-    }
-    throw new ChatSDKError(
-      "rate_limit:chat",
-      "Rate limiting service is not configured",
-    );
+    return {
+      rateLimitSkipped: true,
+      release: async () => {},
+    };
   }
 
   const lockKey = freeRunLockKey(userId);
