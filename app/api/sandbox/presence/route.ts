@@ -24,10 +24,10 @@ export async function GET(request: NextRequest) {
   const serviceKey = process.env.CONVEX_SERVICE_ROLE_KEY;
 
   if (!wsUrl) {
-    return NextResponse.json(
-      { error: "Centrifugo not configured" },
-      { status: 500 },
-    );
+    return NextResponse.json({
+      connections: [],
+      onlineCount: 0,
+    });
   }
 
   // Fetch connection metadata from Convex before probing per-connection
