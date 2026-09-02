@@ -1065,6 +1065,13 @@ export const createOpenRouterPatchFetch =
           makeOpenRouterToolChoiceCompatibleWithXaiReasoning(
             reasoningPatched.body,
           );
+        if (typeof xaiCompatible.body === "object" && xaiCompatible.body !== null) {
+          const bodyRecord = xaiCompatible.body as Record<string, unknown>;
+          if (typeof bodyRecord.max_tokens === "number" && bodyRecord.max_tokens > 4096) {
+            bodyRecord.max_tokens = 4096;
+            xaiCompatible.changed = true;
+          }
+        }
         parsedRequestBody = xaiCompatible.body;
         if (
           kimiNormalized.changed ||
