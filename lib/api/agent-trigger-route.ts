@@ -156,10 +156,7 @@ type AgentDeploymentEnvironment = {
 
 export const shouldRequireAgentApprovalWorkerVersion = (
   environment: AgentDeploymentEnvironment = process.env,
-) =>
-  environment.VERCEL_ENV
-    ? environment.VERCEL_ENV === "production"
-    : environment.NODE_ENV === "production";
+) => Boolean(process.env.TRIGGER_VERSION);
 
 type AgentTriggerRequestBody = {
   messages: UIMessage[];
