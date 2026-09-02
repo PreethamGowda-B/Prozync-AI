@@ -10,6 +10,7 @@ import {
   formatSearchResults,
   isRetryablePerplexityStatus,
   summarizePerplexityErrorBody,
+  type FormattedSearchResult,
 } from "./utils/perplexity";
 import { reportToolFailure } from "./tool-failure";
 import {
@@ -19,13 +20,6 @@ import {
   type WebSearchToolInput,
 } from "./schemas";
 
-/**
- * Web search tool using Perplexity Search API
- * Provides ranked web search results with content extraction
- */
-/** Perplexity Search API cost: $5 per 1K requests */
-const WEB_SEARCH_COST_PER_REQUEST = 0.005;
-const PERPLEXITY_SEARCH_URL = "https://api.perplexity.ai/search";
 const WEB_SEARCH_MAX_ATTEMPTS = 3;
 const WEB_SEARCH_RETRY_BASE_DELAY_MS = 300;
 const WEB_SEARCH_RETRY_JITTER_MS = 75;
@@ -62,109 +56,48 @@ const getRetryDelayMs = (attemptIndex: number): number => {
   return Math.round(exponentialDelay + jitter);
 };
 
-const createPerplexityApiError = async (
-  response: Response,
-): Promise<PerplexityApiError> => {
-  const errorText = await response.text();
-  const bodySummary = summarizePerplexityErrorBody(
-    errorText,
-    response.headers.get("content-type") || "",
-  );
-
-  return new PerplexityApiError({
-    status: response.status,
-    statusText: response.statusText,
-    bodySummary,
-    retryable: isRetryablePerplexityStatus(response.status),
-  });
-};
-
-const formatPerplexityFailureForTool = (
-  error: PerplexityApiError,
-  attempts: number,
-): string => {
-  const statusText = error.statusText ? ` ${error.statusText}` : "";
-
-  if (error.retryable) {
-    return `Error performing web search: Perplexity search is temporarily unavailable (HTTP ${error.status}${statusText} after ${attempts} attempts). Please retry shortly or continue without live web results if the task can proceed.`;
-  }
-
-  if (error.status === 401 || error.status === 403) {
-    return `Error performing web search: Perplexity search is not authorized (HTTP ${error.status}${statusText}). Check the Perplexity API key or account access.`;
-  }
-
-  return `Error performing web search: Perplexity search failed (HTTP ${error.status}${statusText}).`;
-};
-
-const fetchPerplexitySearch = async (
-  searchBody: Record<string, unknown>,
+/**
+ * Perform web search using Jina Search API (https://s.jina.ai)
+ */
+async function searchWithJina(
+  query: string,
   abortSignal?: AbortSignal,
-): Promise<Response> => {
-  for (
-    let attemptIndex = 0;
-    attemptIndex < WEB_SEARCH_MAX_ATTEMPTS;
-    attemptIndex++
-  ) {
-    const attempt = attemptIndex + 1;
-    const isFinalAttempt = attempt === WEB_SEARCH_MAX_ATTEMPTS;
+): Promise<FormattedSearchResult[]> {
+  const url = `https://s.jina.ai/${encodeURIComponent(query)}`;
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+    "X-Retain-Images": "none",
+  };
 
-    try {
-      const response = await fetch(PERPLEXITY_SEARCH_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.PERPLEXITY_API_KEY || ""}`,
-        },
-        body: JSON.stringify(searchBody),
-        signal: abortSignal,
-      });
-
-      if (response.ok) {
-        return response;
-      }
-
-      const error = await createPerplexityApiError(response);
-
-      if (!error.retryable || isFinalAttempt) {
-        throw error;
-      }
-
-      const delayMs = getRetryDelayMs(attemptIndex);
-      console.warn("Web search provider error; retrying", {
-        attempt,
-        maxAttempts: WEB_SEARCH_MAX_ATTEMPTS,
-        status: error.status,
-        statusText: error.statusText,
-        bodySummary: error.bodySummary,
-        delayMs,
-      });
-      await sleep(delayMs, abortSignal);
-    } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") {
-        throw error;
-      }
-
-      if (error instanceof PerplexityApiError) {
-        throw error;
-      }
-
-      if (isFinalAttempt) {
-        throw error;
-      }
-
-      const delayMs = getRetryDelayMs(attemptIndex);
-      console.warn("Web search network error; retrying", {
-        attempt,
-        maxAttempts: WEB_SEARCH_MAX_ATTEMPTS,
-        error: stringifyRedactedError(error),
-        delayMs,
-      });
-      await sleep(delayMs, abortSignal);
-    }
+  if (process.env.JINA_API_KEY) {
+    headers["Authorization"] = `Bearer ${process.env.JINA_API_KEY}`;
   }
 
-  throw new Error("Web search failed before any Perplexity response was read");
-};
+  const response = await fetch(url, {
+    method: "GET",
+    headers,
+    signal: abortSignal,
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Jina Search error: HTTP ${response.status} ${response.statusText}`,
+    );
+  }
+
+  const json = await response.json();
+  const data = json.data || (Array.isArray(json) ? json : []);
+
+  return data.map((item: any) => ({
+    title: item.title || item.url || "Untitled",
+    url: item.url || "",
+    content:
+      item.description ||
+      (typeof item.content === "string" ? item.content.slice(0, 1000) : ""),
+    date: item.publishedTime || null,
+    lastUpdated: null,
+  }));
+}
 
 const normalizeSearchQueries = (
   rawQueries: string[],
@@ -183,8 +116,6 @@ const normalizeSearchQueries = (
 };
 
 export const createWebSearch = (context: ToolContext) => {
-  const { userLocation, onToolCost } = context;
-
   return tool({
     ...webSearchTool,
     inputSchema: createWebSearchToolSchema({
@@ -200,71 +131,67 @@ export const createWebSearch = (context: ToolContext) => {
           return error;
         }
 
+        // Use Jina Search when JINA_API_KEY is available or as primary search provider
+        if (process.env.JINA_API_KEY || !process.env.PERPLEXITY_API_KEY) {
+          const resultsNested = await Promise.all(
+            queries.map((q) => searchWithJina(q, abortSignal)),
+          );
+          const allResults = resultsNested.flat();
+
+          if (allResults.length === 0) {
+            return "No web search results found for the given queries.";
+          }
+
+          return allResults;
+        }
+
+        // Fallback: Perplexity Search if PERPLEXITY_API_KEY is explicitly set
         const searchBody = buildPerplexitySearchBody(
           queries.length === 1 ? queries[0] : queries,
           {
-            country: userLocation?.country,
+            country: context.userLocation?.country,
             recency: time && time !== "all" ? RECENCY_MAP[time] : undefined,
           },
         );
 
-        const response = await fetchPerplexitySearch(searchBody, abortSignal);
+        const response = await fetch("https://api.perplexity.ai/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.PERPLEXITY_API_KEY || ""}`,
+          },
+          body: JSON.stringify(searchBody),
+          signal: abortSignal,
+        });
 
-        // Report web search cost ($5 per 1K requests)
-        onToolCost?.(WEB_SEARCH_COST_PER_REQUEST);
+        if (!response.ok) {
+          throw new Error(
+            `Perplexity API error: HTTP ${response.status} ${response.statusText}`,
+          );
+        }
 
         const searchResponse: PerplexitySearchResponse = await response.json();
-
-        // Handle both single query (flat array) and multi-query (nested arrays) responses
-        const isMultiQuery = queries.length > 1;
         let allResults: PerplexitySearchResult[];
 
-        if (isMultiQuery && Array.isArray(searchResponse.results[0])) {
-          // Multi-query response: flatten results from all queries
+        if (queries.length > 1 && Array.isArray(searchResponse.results[0])) {
           allResults = (
             searchResponse.results as PerplexitySearchResult[][]
           ).flat();
         } else {
-          // Single query response: results is already a flat array
           allResults = searchResponse.results as PerplexitySearchResult[];
         }
 
         return formatSearchResults(allResults);
       } catch (error) {
-        // Handle abort errors gracefully without logging
         if (error instanceof Error && error.name === "AbortError") {
           return "Error: Operation aborted";
-        }
-
-        if (error instanceof PerplexityApiError) {
-          const attempts = error.retryable ? WEB_SEARCH_MAX_ATTEMPTS : 1;
-          const logFields = {
-            name: error.name,
-            status: error.status,
-            statusText: error.statusText,
-            retryable: error.retryable,
-            bodySummary: error.bodySummary,
-          };
-          reportToolFailure(context.onToolFailure, {
-            event: "web_search_provider_failed",
-            tool_name: "web_search",
-            provider: "perplexity",
-            status: error.status,
-            status_text: error.statusText,
-            retryable: error.retryable,
-            attempts,
-            error_name: error.name,
-            body_summary: error.bodySummary,
-          });
-          console.error("Web search tool error:", logFields);
-          return formatPerplexityFailureForTool(error, attempts);
         }
 
         const errorMessage = stringifyRedactedError(error);
         reportToolFailure(context.onToolFailure, {
           event: "web_search_tool_failed",
           tool_name: "web_search",
-          provider: "perplexity",
+          provider: "jina",
           error_name: error instanceof Error ? error.name : "UnknownError",
           error_message: errorMessage,
         });

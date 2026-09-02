@@ -103,7 +103,11 @@ export function handleAgentRouteError({
     }),
   );
   const actualMessage =
-    error instanceof Error ? error.message : typeof error === "string" ? error : fallbackMessage;
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : fallbackMessage;
   return NextResponse.json(
     {
       code: "bad_request:api",

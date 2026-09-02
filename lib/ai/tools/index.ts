@@ -267,7 +267,7 @@ export const createTools = (
         update_note: createUpdateNote(context),
         delete_note: createDeleteNote(context),
       }),
-      ...(process.env.PERPLEXITY_API_KEY && {
+      ...((process.env.JINA_API_KEY || process.env.PERPLEXITY_API_KEY) && {
         web_search: createWebSearch(context),
       }),
       ...(process.env.JINA_API_KEY && {
@@ -292,7 +292,7 @@ export const createTools = (
             update_note: allTools.update_note,
             delete_note: allTools.delete_note,
           }),
-          ...(process.env.PERPLEXITY_API_KEY && {
+          ...((process.env.JINA_API_KEY || process.env.PERPLEXITY_API_KEY) && {
             web_search: createWebSearch(context),
           }),
           ...(process.env.JINA_API_KEY && {
