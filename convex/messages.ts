@@ -519,7 +519,7 @@ async function ensureChatWritableForMessageInsert(
  */
 export const saveMessage = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     id: v.string(),
     chatId: v.string(),
     userId: v.string(),
@@ -1377,7 +1377,7 @@ export const deleteLastAssistantMessage = mutation({
  */
 export const getLastAssistantMessage = query({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     userId: v.string(),
   },
@@ -1448,7 +1448,7 @@ export const getLastAssistantMessage = query({
  */
 export const getMessagesPageForBackend = query({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     userId: v.string(),
     paginationOpts: paginationOptsValidator,

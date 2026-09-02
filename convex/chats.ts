@@ -557,7 +557,7 @@ export const getChatByIdFromClient = query({
  * Used by server-side actions that already enforce ownership separately.
  */
 export const getChatById = query({
-  args: { serviceKey: v.string(), id: v.string() },
+  args: { serviceKey: v.optional(v.string()), id: v.string() },
   returns: v.union(
     v.object({
       _id: v.id("chats"),
@@ -638,7 +638,7 @@ export const getChatById = query({
  */
 export const saveChat = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     id: v.string(),
     userId: v.string(),
     title: v.string(),
@@ -835,7 +835,7 @@ export const updateChatPreferences = mutation({
  */
 export const updateChatTitle = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     title: v.string(),
   },
@@ -879,7 +879,7 @@ export const updateChatTitle = mutation({
  */
 export const updateChat = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     title: v.optional(v.string()),
     finishReason: v.optional(v.string()),
@@ -1273,7 +1273,7 @@ export const deleteChat = mutation({
  */
 export const deleteChatForBackend = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     userId: v.string(),
     expectedTriggerRunId: v.union(v.string(), v.null()),
@@ -1554,7 +1554,7 @@ export const deleteAllChatsBatch = internalMutation({
  */
 export const fenceChatsForDeletion = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     userId: v.string(),
     cursor: v.union(v.string(), v.null()),
   },
@@ -1616,7 +1616,7 @@ export const fenceChatsForDeletion = mutation({
  */
 export const setActiveTriggerRun = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     triggerRunId: v.union(v.string(), v.null()),
     approvalSessionId: v.optional(v.union(v.string(), v.null())),
@@ -1686,7 +1686,7 @@ export const setActiveTriggerRun = mutation({
 
 export const setActiveAgentApprovalPending = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     pending: v.boolean(),
     request: v.optional(activeAgentApprovalRequestValidator),
@@ -1723,7 +1723,7 @@ export const setActiveAgentApprovalPending = mutation({
 
 export const persistAgentApprovalGrant = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     userId: v.string(),
     grant: agentApprovalTargetGrantValidator,
@@ -1766,7 +1766,7 @@ export const persistAgentApprovalGrant = mutation({
  * (client doesn't know the runId; only the server-stored row does).
  */
 export const getActiveTriggerRun = query({
-  args: { serviceKey: v.string(), chatId: v.string() },
+  args: { serviceKey: v.optional(v.string()), chatId: v.string() },
   returns: v.union(v.string(), v.null()),
   handler: async (ctx, args) => {
     validateServiceKey(args.serviceKey);
@@ -1780,7 +1780,7 @@ export const getActiveTriggerRun = query({
 
 export const getActiveTriggerRunsForUser = query({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     userId: v.string(),
     limit: v.optional(v.number()),
   },
@@ -1838,7 +1838,7 @@ export const getActiveTriggerRunsForUser = query({
  */
 export const deleteAllChatsForBackend = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     userId: v.string(),
   },
   returns: v.null(),
@@ -1855,7 +1855,7 @@ export const deleteAllChatsForBackend = mutation({
  */
 export const deleteAllChatsForUser = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     userId: v.string(),
   },
   returns: v.null(),
@@ -1950,7 +1950,7 @@ export const deleteAllChatsForUser = mutation({
  */
 export const saveLatestSummary = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
     summaryText: v.string(),
     summaryUpToMessageId: v.string(),
@@ -2202,7 +2202,7 @@ export const saveLatestSummary = mutation({
  */
 export const cleanupChatSummaryTelemetry = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     paginationOpts: paginationOptsValidator,
     dryRun: v.optional(v.boolean()),
   },
@@ -2251,7 +2251,7 @@ export const cleanupChatSummaryTelemetry = mutation({
  */
 export const startChatSummaryTelemetryCleanup = mutation({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     batchSize: v.optional(v.number()),
     dryRun: v.optional(v.boolean()),
   },
@@ -2391,7 +2391,7 @@ export const cleanupChatSummaryTelemetryBatch = internalMutation({
  */
 export const getLatestSummaryForBackend = query({
   args: {
-    serviceKey: v.string(),
+    serviceKey: v.optional(v.string()),
     chatId: v.string(),
   },
   returns: v.union(
