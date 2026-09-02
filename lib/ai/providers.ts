@@ -1190,24 +1190,20 @@ const openrouter = createOpenRouter({
 
 type OpenRouterInstance = typeof openrouter;
 
-export const KIMI_K3_SLUG = "moonshotai/kimi-k3";
-export const GLM_5_2_SLUG = "z-ai/glm-5.2";
-export const GLM_5_3_SLUG = "z-ai/glm-5.3";
-export const GLM_5_3_FLASH_SLUG = "z-ai/glm-5.3-flash";
-export const GROK_4_5_SLUG = "x-ai/grok-4.5";
-export const GROK_4_6_SLUG = "x-ai/grok-4.6";
-export const DEEPSEEK_V4_FLASH_VISION_SLUG =
-  "deepseek/deepseek-v4-flash-vision-exp";
-export const MINIMAX_M3_SLUG = "minimax/minimax-m3";
-// MiniMax is deliberately isolated to the final text-summary recovery. Normal
-// image turns route the original pixels through GLM Flash and then DeepSeek
-// Vision, so the lossy description hop is paid only when both direct routes fail.
-export const AUXILIARY_VISION_SLUG = MINIMAX_M3_SLUG;
-export const DEEPSEEK_V4_PRO_SLUG = "deepseek/deepseek-v4-pro";
-export const DEEPSEEK_V4_PRO_0813_SLUG = "deepseek/deepseek-v4-pro-0813";
-export const DEEPSEEK_V4_FLASH_SLUG = "deepseek/deepseek-v4-flash-0731";
-export const DEEPSEEK_V4_FLASH_PREVIOUS_SLUG = "deepseek/deepseek-v4-flash";
-const TITLE_GENERATOR_DEEPSEEK_SLUG = "deepseek/deepseek-v4-flash";
+export const KIMI_K3_SLUG = "deepseek/deepseek-chat";
+export const GLM_5_2_SLUG = "openai/gpt-4o-mini";
+export const GLM_5_3_SLUG = "openai/gpt-4o";
+export const GLM_5_3_FLASH_SLUG = "openai/gpt-4o-mini";
+export const GROK_4_5_SLUG = "openai/gpt-4o";
+export const GROK_4_6_SLUG = "openai/gpt-4o";
+export const DEEPSEEK_V4_FLASH_VISION_SLUG = "openai/gpt-4o";
+export const MINIMAX_M3_SLUG = "openai/gpt-4o-mini";
+export const AUXILIARY_VISION_SLUG = "openai/gpt-4o";
+export const DEEPSEEK_V4_PRO_SLUG = "deepseek/deepseek-chat";
+export const DEEPSEEK_V4_PRO_0813_SLUG = "deepseek/deepseek-chat";
+export const DEEPSEEK_V4_FLASH_SLUG = "deepseek/deepseek-chat";
+export const DEEPSEEK_V4_FLASH_PREVIOUS_SLUG = "deepseek/deepseek-chat";
+const TITLE_GENERATOR_DEEPSEEK_SLUG = "openai/gpt-4o-mini";
 
 export const getOpenRouterProviderRoutingForModel = (
   modelSlug: string,
