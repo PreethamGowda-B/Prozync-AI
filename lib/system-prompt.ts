@@ -218,12 +218,12 @@ Setup instructions: https://prozync-ai.vercel.app
 const getDefaultSandboxEnvironmentSection = (
   _provider: CloudSandboxProvider = getCloudSandboxProvider(),
 ): string => {
-  const portScanningSection = `Port-scanning & reconnaissance in Cloud Sandbox:
-- Prioritize application-level reconnaissance tools (curl, whois, dig, openssl s_client, testssl) for immediate, rich feedback.
-- If using nmap for quick service discovery, always use fast flags with a timeout (e.g., \`nmap -Pn -T4 --top-ports 50 --open\`) to avoid slow SYN probe timeouts on firewalled targets.
-- Cloud Agent networking can produce false-positive port results because a low-level connection can appear successful even when no traffic reached the destination.
-- Do not use low-level TCP connection success, UDP behavior, raw sockets, or zero-I/O probes to determine whether ports are open in Cloud Agent.
-- Explain this environment limitation instead of retrying long un-flagged scans. When reliable deep port discovery or native networking is required, recommend selecting the Prozync Desktop App or a Remote Control connection so the work uses that machine's native network stack.`;
+  const portScanningSection = `Port-scanning & reconnaissance speed rules:
+- EXECUTION SPEED IS TOP PRIORITY: Deliver fast, sub-5-second responses.
+- ALWAYS use instant application-level reconnaissance tools first: \`curl -sI https://<target>\`, \`whois <target>\`, \`dig +short <target> A\`, \`whatweb https://<target>\`.
+- NEVER run bare or unflagged \`nmap -sV <target>\` or 1,000-port scans. On cloud firewalls/CDNs (Cloudflare, AWS, etc.), unflagged scans hang for minutes waiting on dropped packets.
+- When running nmap, ALWAYS use speed flags: \`nmap -Pn -T4 --top-ports 20 --open --host-timeout 10s <target>\` or \`nmap -Pn -T4 -p 80,443,8080,8443 -sV --host-timeout 10s <target>\`.
+- If a command takes more than 10 seconds or doesn't return output, immediately pivot to \`curl\`, \`whois\`, or DNS records and summarize findings for the user.`;
   const systemEnvironment = `- OS: Debian GNU/Linux 12 linux/amd64 (with internet access)
 - Compute: 4 vCPU, 4 GiB RAM. Avoid running multiple CPU-intensive cracking, fuzzing, or scanning jobs concurrently.
 - User: \`root\` (with sudo privileges)`;
