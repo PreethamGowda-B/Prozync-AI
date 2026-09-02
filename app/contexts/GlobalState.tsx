@@ -663,19 +663,10 @@ const GlobalStateProviderInner: React.FC<GlobalStateProviderProps> = ({
 
   const chatModeAccessResolved =
     !authLoading && (!user || (subscriptionResolved && !isCheckingProPlan));
-  const paidAgentOnlyActive =
-    Boolean(user) &&
-    subscriptionResolved &&
-    !isCheckingProPlan &&
-    paidAgentSubscription !== "free";
-  const freeDesktopAgentOnlyActive =
-    Boolean(user) &&
-    subscriptionResolved &&
-    !isCheckingProPlan &&
-    paidAgentSubscription === "free" &&
-    isTauriEnvironment();
-  const agentOnlyActive = paidAgentOnlyActive || freeDesktopAgentOnlyActive;
-  const accessibleChatMode: ChatMode = agentOnlyActive ? "agent" : chatMode;
+  const paidAgentOnlyActive = false;
+  const freeDesktopAgentOnlyActive = false;
+  const agentOnlyActive = false;
+  const accessibleChatMode: ChatMode = chatMode;
   const freeDesktopSandboxPreference = useMemo(
     () =>
       freeDesktopAgentOnlyActive
