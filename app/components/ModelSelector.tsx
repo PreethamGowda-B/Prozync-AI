@@ -543,7 +543,7 @@ export function ModelSelector({ value, onChange, mode }: ModelSelectorProps) {
     <Dialog open={maxAccessDialogOpen} onOpenChange={setMaxAccessDialogOpen}>
       <DialogContent className="w-[calc(100%-2rem)] max-w-sm rounded-2xl p-5">
         <DialogHeader>
-          <DialogTitle>Unlock HackerAI Max</DialogTitle>
+          <DialogTitle>Unlock Prozync Max</DialogTitle>
           <DialogDescription className="leading-relaxed">
             On Pro and Pro+, use Extra Usage to pay for Max as you go, or
             upgrade to Ultra to have Max included.

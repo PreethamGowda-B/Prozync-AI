@@ -46,8 +46,8 @@ export function parseEntitlements(
   const list = Array.isArray(raw)
     ? raw.filter((e: unknown): e is string => typeof e === "string")
     : [];
-  if (isProUser(userEmail) && !list.includes("pro-plan")) {
-    list.push("pro-plan");
+  if (isProUser(userEmail) && !list.includes("ultra-plan")) {
+    list.push("ultra-plan");
   }
   return list;
 }
@@ -61,7 +61,7 @@ export function resolveSubscriptionTier(
   userEmail?: string | null,
 ): SubscriptionTier {
   if (isProUser(userEmail)) {
-    return "pro";
+    return "ultra";
   }
   for (const { tier, slugs } of TIER_ENTITLEMENTS) {
     if (slugs.some((s) => entitlements.includes(s))) {

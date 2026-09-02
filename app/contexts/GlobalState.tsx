@@ -36,7 +36,7 @@ import {
   type DesktopBridgeStatus,
 } from "@/app/hooks/useSandboxPreference";
 import { isTauriEnvironment } from "@/app/hooks/useTauri";
-import { resolveSubscriptionTier } from "@/lib/auth/entitlements";
+import { isProUser, resolveSubscriptionTier } from "@/lib/auth/entitlements";
 import { clearSharedToken, setSharedToken } from "@/lib/auth/shared-token";
 import { chatSidebarStorage } from "@/lib/utils/sidebar-storage";
 import { useMutation, useQuery } from "convex/react";
@@ -270,9 +270,10 @@ const GlobalStateProviderInner: React.FC<GlobalStateProviderProps> = ({
   const [entitlementRefreshRetryNonce, setEntitlementRefreshRetryNonce] =
     useState(0);
   const subscriptionFromEntitlements = useMemo<SubscriptionTier | null>(() => {
+    if (user?.email && isProUser(user.email)) return "ultra";
     if (!Array.isArray(entitlements)) return null;
-    return resolveSubscriptionTier(entitlements);
-  }, [entitlements]);
+    return resolveSubscriptionTier(entitlements, user?.email);
+  }, [entitlements, user?.email]);
   const refreshAuthTokenAfterEntitlementRefresh = useCallback(async () => {
     clearSharedToken();
 
