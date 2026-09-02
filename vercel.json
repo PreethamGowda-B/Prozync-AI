@@ -7,7 +7,7 @@
     },
     {
       "path": "/api/cron/platform-costs/convex",
-      "schedule": "59 * * * *"
+      "schedule": "59 12 * * *"
     }
   ]
 }
