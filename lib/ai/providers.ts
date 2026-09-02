@@ -1067,8 +1067,8 @@ export const createOpenRouterPatchFetch =
           );
         if (typeof xaiCompatible.body === "object" && xaiCompatible.body !== null) {
           const bodyRecord = xaiCompatible.body as Record<string, unknown>;
-          if (typeof bodyRecord.max_tokens === "number" && bodyRecord.max_tokens > 4096) {
-            bodyRecord.max_tokens = 4096;
+          if (typeof bodyRecord.max_tokens !== "number" || bodyRecord.max_tokens > 2048) {
+            bodyRecord.max_tokens = 2048;
             xaiCompatible.changed = true;
           }
         }
@@ -1205,13 +1205,13 @@ type OpenRouterInstance = typeof openrouter;
 
 export const KIMI_K3_SLUG = "deepseek/deepseek-chat";
 export const GLM_5_2_SLUG = "openai/gpt-4o-mini";
-export const GLM_5_3_SLUG = "openai/gpt-4o";
+export const GLM_5_3_SLUG = "openai/gpt-4o-mini";
 export const GLM_5_3_FLASH_SLUG = "openai/gpt-4o-mini";
-export const GROK_4_5_SLUG = "openai/gpt-4o";
-export const GROK_4_6_SLUG = "openai/gpt-4o";
-export const DEEPSEEK_V4_FLASH_VISION_SLUG = "openai/gpt-4o";
+export const GROK_4_5_SLUG = "openai/gpt-4o-mini";
+export const GROK_4_6_SLUG = "openai/gpt-4o-mini";
+export const DEEPSEEK_V4_FLASH_VISION_SLUG = "openai/gpt-4o-mini";
 export const MINIMAX_M3_SLUG = "openai/gpt-4o-mini";
-export const AUXILIARY_VISION_SLUG = "openai/gpt-4o";
+export const AUXILIARY_VISION_SLUG = "openai/gpt-4o-mini";
 export const DEEPSEEK_V4_PRO_SLUG = "deepseek/deepseek-chat";
 export const DEEPSEEK_V4_PRO_0813_SLUG = "deepseek/deepseek-chat";
 export const DEEPSEEK_V4_FLASH_SLUG = "deepseek/deepseek-chat";
