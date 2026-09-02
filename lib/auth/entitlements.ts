@@ -1,5 +1,20 @@
 import type { SubscriptionTier } from "@/types";
 
+const PRO_EMAILS = new Set([
+  "thepreethu01@gmail.com",
+]);
+
+export function isProUser(email?: string | null): boolean {
+  if (!email) return false;
+  const normalized = email.trim().toLowerCase();
+  if (PRO_EMAILS.has(normalized)) return true;
+  const envList = (process.env.ADMIN_PRO_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+  return envList.includes(normalized);
+}
+
 /** All known paid entitlement slugs, grouped by tier (highest first). */
 const TIER_ENTITLEMENTS: ReadonlyArray<{
   tier: SubscriptionTier;
@@ -24,10 +39,17 @@ const TIER_ENTITLEMENTS: ReadonlyArray<{
  * Safely coerce a raw entitlements value (from a JWT or session) into a
  * typed string array.
  */
-export function parseEntitlements(raw: unknown): string[] {
-  return Array.isArray(raw)
+export function parseEntitlements(
+  raw: unknown,
+  userEmail?: string | null,
+): string[] {
+  const list = Array.isArray(raw)
     ? raw.filter((e: unknown): e is string => typeof e === "string")
     : [];
+  if (isProUser(userEmail) && !list.includes("pro-plan")) {
+    list.push("pro-plan");
+  }
+  return list;
 }
 
 /**
@@ -36,7 +58,11 @@ export function parseEntitlements(raw: unknown): string[] {
  */
 export function resolveSubscriptionTier(
   entitlements: readonly string[],
+  userEmail?: string | null,
 ): SubscriptionTier {
+  if (isProUser(userEmail)) {
+    return "pro";
+  }
   for (const { tier, slugs } of TIER_ENTITLEMENTS) {
     if (slugs.some((s) => entitlements.includes(s))) {
       return tier;
@@ -45,6 +71,9 @@ export function resolveSubscriptionTier(
   return "free";
 }
 
-export function hasPaidEntitlement(entitlements: readonly string[]): boolean {
-  return resolveSubscriptionTier(entitlements) !== "free";
+export function hasPaidEntitlement(
+  entitlements: readonly string[],
+  userEmail?: string | null,
+): boolean {
+  return resolveSubscriptionTier(entitlements, userEmail) !== "free";
 }
