@@ -22,7 +22,7 @@ const envValue = (value: string | undefined): string | undefined => {
 
 const getUsClusterConfig = (): E2BClusterConfig => ({
   cluster: "us",
-  template: envValue(process.env.E2B_TEMPLATE) ?? "terminal-agent-sandbox",
+  template: envValue(process.env.E2B_TEMPLATE) ?? "base",
 });
 
 const getEuClusterConfig = (): E2BClusterConfig | null => {
@@ -34,7 +34,7 @@ const getEuClusterConfig = (): E2BClusterConfig | null => {
     template:
       envValue(process.env.E2B_EU_TEMPLATE) ??
       envValue(process.env.E2B_TEMPLATE) ??
-      "terminal-agent-sandbox",
+      "base",
     connectionOptions: {
       apiKey,
       domain: envValue(process.env.E2B_EU_DOMAIN) ?? E2B_EU_DOMAIN,
