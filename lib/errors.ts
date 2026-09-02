@@ -27,7 +27,7 @@ export type ErrorCode = `${ErrorType}:${Surface}`;
 export type ErrorVisibility = "response" | "log" | "none";
 
 export const visibilityBySurface: Record<Surface, ErrorVisibility> = {
-  database: "log",
+  database: "response",
   chat: "response",
   auth: "response",
   stream: "response",
