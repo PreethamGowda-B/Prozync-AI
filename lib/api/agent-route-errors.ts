@@ -102,10 +102,12 @@ export function handleAgentRouteError({
       ...serializeRouteError(error),
     }),
   );
+  const actualMessage =
+    error instanceof Error ? error.message : typeof error === "string" ? error : fallbackMessage;
   return NextResponse.json(
     {
       code: "bad_request:api",
-      message: "Something went wrong. Please try again later.",
+      message: actualMessage || fallbackMessage,
       cause: fallbackMessage,
     },
     { status: 500 },

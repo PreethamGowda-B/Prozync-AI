@@ -730,10 +730,7 @@ export const createAgentTriggerPost =
         }),
       };
       const triggerOptions = {
-        ...(triggerPriority > 0 ? { priority: triggerPriority } : {}),
-        machine: triggerMachine,
         tags: triggerTags,
-        region: triggerRegion,
         idempotencyKey: triggerIdempotencyKey,
         idempotencyKeyTTL: "6h",
         metadata: triggerMetadata,
