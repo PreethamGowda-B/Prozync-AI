@@ -1347,13 +1347,6 @@ export function assertChatModeAccess(args: {
   if (args.mode !== "ask" && args.mode !== "agent") {
     throw new ChatSDKError("bad_request:api", "Invalid chat mode.");
   }
-
-  if (args.mode !== "ask" || args.subscription === "free") return;
-
-  throw new ChatSDKError(
-    "forbidden:chat",
-    "Paid plans use Agent mode. Ask mode is only available on the free plan.",
-  );
 }
 
 /**
