@@ -24,11 +24,11 @@ export function ProzyncLogo({
   animated?: boolean;
 }) {
   const sizeMap = {
-    xs: "w-4 h-4",
-    sm: "w-5 h-5",
-    md: "w-6 h-6",
-    lg: "w-8 h-8",
-    xl: "w-10 h-10",
+    xs: "w-5 h-5",
+    sm: "w-6 h-6",
+    md: "w-7 h-7",
+    lg: "w-9 h-9",
+    xl: "w-12 h-12",
   };
 
   return (
@@ -39,57 +39,15 @@ export function ProzyncLogo({
         className
       )}
     >
-      <svg
-        viewBox="0 0 36 36"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={cn("w-full h-full", animated && "transition-transform duration-300 hover:scale-105")}
-      >
-        <defs>
-          <linearGradient id="pz-grad-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" />
-            <stop offset="60%" stopColor="#2563EB" />
-            <stop offset="100%" stopColor="#06B6D4" />
-          </linearGradient>
-          <linearGradient id="pz-grad-accent" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#06B6D4" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </linearGradient>
-          <linearGradient id="pz-grad-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#06B6D4" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        {/* Outer subtle glow background */}
-        <polygon
-          points="18,2 32,10 32,26 18,34 4,26 4,10"
-          fill="url(#pz-grad-glow)"
-          stroke="#1E2230"
-          strokeWidth="1"
-        />
-
-        {/* Outer technical facet */}
-        <path
-          d="M18 4L30 11V25L18 32L6 25V11L18 4Z"
-          stroke="url(#pz-grad-primary)"
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-
-        {/* Core 'P' / Quantum node geometry */}
-        <path
-          d="M13 10H21C23.7614 10 26 12.2386 26 15C26 17.7614 23.7614 20 21 20H13V26"
-          stroke="url(#pz-grad-accent)"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* Inner neural connector dot */}
-        <circle cx="18" cy="15" r="1.5" fill="#38BDF8" />
-        <circle cx="21" cy="20" r="1.2" fill="#06B6D4" />
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/Prozync-Logo.png"
+        alt="Prozync AI Logo"
+        className={cn(
+          "w-full h-full object-contain rounded-sm drop-shadow-sm",
+          animated && "transition-transform duration-300 hover:scale-105"
+        )}
+      />
     </div>
   );
 }
