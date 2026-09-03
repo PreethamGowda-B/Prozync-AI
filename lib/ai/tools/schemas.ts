@@ -18,7 +18,7 @@ export const createToolBriefSchema = ({
     .describe(
       usesDeepSeekToolBrief(modelName)
         ? "Required display metadata for this model. Always provide a concise one-sentence English preamble so the user understands the operation. Write it in English only, never Chinese or another language."
-        : "Optional display metadata. Include a concise one-sentence preamble whenever possible so the user understands the operation; if omitted, HackerAI will show a generated fallback label.",
+        : "Optional display metadata. Include a concise one-sentence preamble whenever possible so the user understands the operation; if omitted, Prozync AI will show a generated fallback label.",
     );
 
 export const toolBriefSchema = createToolBriefSchema();
@@ -60,7 +60,7 @@ export const createRunTerminalCmdToolSchema = ({
     description: `Execute a command on behalf of the user.
 If you have this tool, note that you DO have the ability to run commands directly in the sandbox environment.
 Commands run in the selected sandbox environment.${approvalGated ? " The platform will pause execution after you call this tool and ask the user to approve it; do not ask in chat instead of calling the tool when a command is needed." : ""}
-${approvalGated ? "For every approval-gated command, provide a concise, user-facing justification describing the intended outcome; HackerAI displays it in the approval prompt, so do not merely repeat the command. prefix_rule is optional: provide it only for a narrow, useful category of similar commands the user can safely approve for this conversation. It must be an exact argv prefix represented as separate array elements. Prefer a stable safe prefix over copying the complete command, and omit it when no reusable scope is appropriate. Never provide prefix_rule for destructive commands, shell wrappers, compound commands, redirects, substitutions, environment assignments, wildcards, or other dynamic shell syntax." : ""}
+${approvalGated ? "For every approval-gated command, provide a concise, user-facing justification describing the intended outcome; Prozync AI displays it in the approval prompt, so do not merely repeat the command. prefix_rule is optional: provide it only for a narrow, useful category of similar commands the user can safely approve for this conversation. It must be an exact argv prefix represented as separate array elements. Prefer a stable safe prefix over copying the complete command, and omit it when no reusable scope is appropriate. Never provide prefix_rule for destructive commands, shell wrappers, compound commands, redirects, substitutions, environment assignments, wildcards, or other dynamic shell syntax." : ""}
 In using these tools, adhere to the following guidelines:
 ${commandCompositionGuidance}
 2. NEVER run code directly via interpreter inline commands (like \`python3 -c "..."\` or \`node -e "..."\`). ALWAYS save code to a file first, then execute the file.
@@ -85,7 +85,7 @@ ${largeOutputGuidance}
               .max(240)
               .optional()
               .describe(
-                "A concise, user-facing reason shown in HackerAI's approval prompt. Explain the intended outcome rather than repeating the command.",
+                "A concise, user-facing reason shown in Prozync AI's approval prompt. Explain the intended outcome rather than repeating the command.",
               ),
             prefix_rule: z
               .array(z.string().min(1).max(256))

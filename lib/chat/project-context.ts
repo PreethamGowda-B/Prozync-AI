@@ -48,7 +48,7 @@ export async function resolveProjectExecutionContext({
   if (folderPath && isAgentMode(mode) && sandboxPreference !== "desktop") {
     throw new ChatSDKError(
       "bad_request:api",
-      "This project is linked to a Desktop folder. Connect HackerAI Desktop and select Desktop before running Agent.",
+      "This project is linked to a Desktop folder. Connect Prozync AI Desktop and select Desktop before running Agent.",
     );
   }
 

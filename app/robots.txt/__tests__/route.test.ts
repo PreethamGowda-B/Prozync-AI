@@ -36,6 +36,6 @@ describe("GET /robots.txt", () => {
     expect(body).toContain("Allow: /");
     expect(body).toContain("Disallow: /api/");
     expect(body).toContain("Disallow: /c/");
-    expect(body).toContain("Sitemap: https://hackerai.co/sitemap.xml");
+    expect(body).toContain("Sitemap: https://prozync-ai.vercel.app/sitemap.xml");
   });
 });

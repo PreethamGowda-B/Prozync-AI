@@ -328,7 +328,7 @@ export default function TrustPage() {
           <div className="grid gap-6 md:grid-cols-2">
             <Section icon={Bug} title="Responsible disclosure">
               <p>
-                Found a security vulnerability in HackerAI? Report it through
+                Found a security vulnerability in Prozync AI? Report it through
                 the <InlineLink href={HELP_CENTER_URL}>help center</InlineLink>.
                 We review all good-faith reports. We don&apos;t run a paid bug
                 bounty program at this time.
@@ -350,7 +350,7 @@ export default function TrustPage() {
           <div className="grid gap-6 md:grid-cols-2">
             <Section icon={Code} title="Source code">
               <p>
-                HackerAI is developed in the open. The full application source
+                Prozync AI is developed in the open. The full application source
                 code is public on{" "}
                 <InlineLink href="https://github.com/hackerai-tech/hackerai">
                   GitHub
@@ -363,7 +363,7 @@ export default function TrustPage() {
 
             <Section icon={BadgeCheck} title="Compliance">
               <p>
-                HackerAI doesn&apos;t currently hold SOC 2, ISO 27001, or other
+                Prozync AI doesn&apos;t currently hold SOC 2, ISO 27001, or other
                 third-party certifications. The service is offered in beta, as
                 described in our{" "}
                 <InlineLink href="/privacy-policy">Privacy Policy</InlineLink>{" "}
@@ -403,7 +403,7 @@ export default function TrustPage() {
             ))}
           </div>
           <p className="mt-8 text-center text-xs text-muted-foreground">
-            Questions about security at HackerAI? Contact us through the{" "}
+            Questions about security at Prozync AI? Contact us through the{" "}
             <InlineLink href={HELP_CENTER_URL}>help center</InlineLink>.
           </p>
         </footer>

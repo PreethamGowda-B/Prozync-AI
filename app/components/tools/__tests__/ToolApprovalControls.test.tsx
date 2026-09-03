@@ -65,7 +65,7 @@ function ApprovalStatusHarness() {
         <ToolApprovalControls
           approvalId="approval-1"
           toolCallId="tool-1"
-          title="Allow HackerAI to run this terminal command?"
+          title="Allow Prozync AI to run this terminal command?"
           target="ping -c 4 hackerone.com"
           justification="Check whether the target host is reachable."
           prefixRule={approvalPrefixRule}

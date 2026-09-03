@@ -43,7 +43,7 @@ export async function openInBrowser(url: string): Promise<boolean> {
 }
 
 async function promptDesktopUpdate(): Promise<void> {
-  toast.error("Update HackerAI Desktop to sign in", {
+  toast.error("Update Prozync AI Desktop to sign in", {
     description:
       "This version is missing the secure sign-in bridge. Opening the latest desktop download in your browser.",
   });

@@ -249,7 +249,7 @@ const ExtraUsageSection = () => {
           <div className="w-full min-w-0 flex flex-row gap-4 items-center">
             <div className="flex flex-col gap-1.5 min-w-0">
               <p className="text-sm">
-                Turn on extra usage to keep using HackerAI if you hit a limit.{" "}
+                Turn on extra usage to keep using Prozync AI if you hit a limit.{" "}
                 <a
                   href="https://help.hackerai.co/en/articles/13455916-extra-usage-for-paid-hackerai-plans"
                   target="_blank"

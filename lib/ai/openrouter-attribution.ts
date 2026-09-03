@@ -1,5 +1,5 @@
-export const OPENROUTER_APP_REFERER = "https://hackerai.co";
-export const OPENROUTER_APP_TITLE = "HackerAI";
+export const OPENROUTER_APP_REFERER = "https://prozync-ai.vercel.app";
+export const OPENROUTER_APP_TITLE = "Prozync AI";
 export const OPENROUTER_APP_CATEGORIES = "cloud-agent,cli-agent";
 
 export const openrouterAttributionHeaders = {

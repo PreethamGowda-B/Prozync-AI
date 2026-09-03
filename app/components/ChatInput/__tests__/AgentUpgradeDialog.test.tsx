@@ -40,7 +40,7 @@ describe("AgentUpgradeDialog", () => {
 
     expect(screen.getByText("Connecting Desktop sandbox")).toBeInTheDocument();
     expect(
-      screen.getByText("HackerAI Desktop is connecting its local sandbox."),
+      screen.getByText("Prozync AI Desktop is connecting its local sandbox."),
     ).toBeInTheDocument();
     expect(
       screen.queryByTestId("agent-install-desktop-button"),

@@ -174,7 +174,7 @@ const DataControlsTab = () => {
       {/* Security & Trust Section */}
       <div className="py-3">
         <div className="text-sm text-muted-foreground">
-          Learn how HackerAI handles your data on our{" "}
+          Learn how Prozync AI handles your data on our{" "}
           <a
             href="/trust"
             target="_blank"

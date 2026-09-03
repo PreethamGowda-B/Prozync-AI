@@ -284,7 +284,7 @@ export const createInteractTerminalSession = (context: ToolContext) => {
         attemptedAction: "send" | "kill",
       ): ActionResult =>
         errorResult(
-          `Session ${sid} changed while HackerAI was reviewing the action. ${attemptedAction === "send" ? "The input was not sent." : "The session was not killed."} Use action=view to refresh the terminal state, then retry the exact interaction.`,
+          `Session ${sid} changed while Prozync AI was reviewing the action. ${attemptedAction === "send" ? "The input was not sent." : "The session was not killed."} Use action=view to refresh the terminal state, then retry the exact interaction.`,
         );
 
       const getMatchingSessionSandbox = async (

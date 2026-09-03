@@ -12,7 +12,7 @@ Disallow: /desktop-login
 Disallow: /desktop-callback
 Disallow: /auth-error
 
-Sitemap: https://hackerai.co/sitemap.xml
+Sitemap: https://prozync-ai.vercel.app/sitemap.xml
 `;
 
 export const dynamic = "force-static";

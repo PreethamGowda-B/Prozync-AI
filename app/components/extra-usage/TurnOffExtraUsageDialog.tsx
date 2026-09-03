@@ -31,7 +31,7 @@ const TurnOffExtraUsageDialog = ({
         </DialogHeader>
         <DialogDescription className="text-muted-foreground py-4">
           Turning off extra usage will immediately prevent you from using
-          HackerAI beyond your base subscription limits. Any ongoing
+          Prozync AI beyond your base subscription limits. Any ongoing
           conversations may be interrupted.
         </DialogDescription>
         <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end">

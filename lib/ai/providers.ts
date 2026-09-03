@@ -1302,10 +1302,10 @@ export const modelCutoffDates: Partial<Record<ModelName, string>> &
 
 export const modelDisplayNames: Record<ModelName, string> &
   Record<string, string> = {
-  "ask-model": "Auto, an intelligent model router built by HackerAI",
-  "ask-model-free": "Auto, an intelligent model router built by HackerAI",
-  "agent-model": "Auto, an intelligent model router built by HackerAI",
-  "agent-model-free": "Auto, an intelligent model router built by HackerAI",
+  "ask-model": "Auto, an intelligent model router built by Prozync AI",
+  "ask-model-free": "Auto, an intelligent model router built by Prozync AI",
+  "agent-model": "Auto, an intelligent model router built by Prozync AI",
+  "agent-model-free": "Auto, an intelligent model router built by Prozync AI",
   "model-grok-4.6": "xAI Grok 4.6",
   "model-grok-4.5": "xAI Grok 4.5",
   "model-grok-4.5-pro": "xAI Grok 4.5",
@@ -1321,8 +1321,8 @@ export const modelDisplayNames: Record<ModelName, string> &
   "model-glm-5.3-flash-agent": "Z.ai GLM 5.3 Flash",
   "model-deepseek-v4-flash-vision": "DeepSeek V4 Flash Vision",
   "model-kimi-k3": "Moonshot Kimi K3",
-  "fallback-agent-model": "Auto, an intelligent model router built by HackerAI",
-  "fallback-ask-model": "Auto, an intelligent model router built by HackerAI",
+  "fallback-agent-model": "Auto, an intelligent model router built by Prozync AI",
+  "fallback-ask-model": "Auto, an intelligent model router built by Prozync AI",
   "title-generator-model": "DeepSeek V4 Flash",
   "agent-auto-review-model": "DeepSeek V4 Flash 0731",
   "auxiliary-vision-model": "Auxiliary vision model",

@@ -389,7 +389,7 @@ describe("HybridSandboxManager prompt-time fallback", () => {
     }
 
     expect((error as Error & { cause?: unknown }).cause).toContain(
-      "HackerAI did not switch this run to Cloud",
+      "Prozync AI did not switch this run to Cloud",
     );
   });
 

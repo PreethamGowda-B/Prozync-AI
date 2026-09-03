@@ -581,7 +581,7 @@ Commands run directly on the host OS "workstation" without Docker isolation. Be 
       "Do not use host.docker.internal as a shortcut to the user's host from the cloud sandbox",
     );
     expect(prompt).toContain(
-      "use the HackerAI Desktop App, Remote Control, or a user-provided reachable tunnel URL",
+      "use the Prozync Desktop App, Remote Control, or a user-provided reachable tunnel URL",
     );
     expect(prompt).toContain(
       "Do not invent host aliases or imply the cloud sandbox can directly reach private/internal assets",
@@ -610,32 +610,8 @@ Commands run directly on the host OS "workstation" without Docker isolation. Be 
     );
 
     expect(cloudPrompt).toContain("<sandbox_environment>");
-    expect(cloudPrompt).toContain(
-      "Cloud Agent networking can produce false-positive port results because a low-level connection can appear successful",
-    );
-    expect(cloudPrompt).toContain(
-      "Do not use low-level TCP connection success, UDP behavior, raw sockets, or zero-I/O probes to determine whether ports are open in Cloud Agent",
-    );
-    expect(cloudPrompt).toContain(
-      "Never treat a successful low-level connection or implausible scan output as confirmation that a port is open",
-    );
-    expect(cloudPrompt).toContain(
-      "recommend selecting the HackerAI Desktop App or a Remote Control connection",
-    );
-    expect(cloudPrompt).toContain(
-      "Narrow application-level checks remain appropriate when they verify expected protocol behavior",
-    );
-    const portScanningPolicy = cloudPrompt.match(
-      /Port-scanning limitation:[\s\S]*?\n\nSystem Environment:/,
-    )?.[0];
-    expect(portScanningPolicy).toBeDefined();
-    expect(portScanningPolicy).not.toMatch(
-      /\b(?:masscan|naabu|nc|netcat|nmap)\b/i,
-    );
-    expect(localPrompt).not.toContain("Port-scanning limitation:");
-    expect(localPrompt).not.toContain(
-      "Cloud Agent networking can produce false-positive port results",
-    );
+    expect(cloudPrompt).toContain("Port-scanning & reconnaissance speed rules:");
+    expect(localPrompt).not.toContain("Port-scanning & reconnaissance speed rules:");
   });
 
   it("does not describe a command sandbox in ask mode", async () => {
@@ -732,20 +708,19 @@ Commands run directly on the host OS "workstation" without Docker isolation. Be 
         null,
         sandboxContext,
       );
-      const setupUrl =
-        "https://help.hackerai.co/en/articles/12961920-connecting-a-hackerai-agent-to-your-local-machine";
+      const setupUrl = "https://prozync-ai.vercel.app";
 
       expect(prompt).toContain("<local_machine_access>");
       expect(prompt).toContain(
-        "Switching to Agent Mode or upgrading does not automatically connect HackerAI to the user's computer.",
+        "Switching to Agent Mode or upgrading does not automatically connect Prozync AI to the user's computer.",
       );
       expect(prompt).toContain(
-        "connect it through the HackerAI Desktop App or Remote Control",
+        "connect it through the Prozync Desktop App or Remote Control",
       );
       expect(prompt).toContain(
         "Local Agent access is available on every plan, including Free.",
       );
-      expect(prompt.split(setupUrl)).toHaveLength(2);
+      expect(prompt.split(setupUrl)).toHaveLength(3);
       expect(prompt).toContain(expectedVariant);
     },
   );

@@ -3,7 +3,7 @@ import type { ChatMode } from "@/types";
 const HACKERAI_DESKTOP_USER_AGENT_TOKEN = "HackerAI-Desktop";
 
 export const LEGACY_DESKTOP_AGENT_UPDATE_MESSAGE =
-  "Agent mode now requires the latest HackerAI Desktop app. Please update HackerAI Desktop, then try again.";
+  "Agent mode now requires the latest Prozync AI Desktop app. Please update Prozync AI Desktop, then try again.";
 
 export function isHackerAIDesktopUserAgent(
   userAgent: string | null | undefined = getBrowserUserAgent(),

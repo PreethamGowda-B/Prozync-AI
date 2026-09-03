@@ -119,7 +119,7 @@ async function createAutoReloadInvoice(
           invoice: invoice.id,
           amount: amountCents,
           currency: "usd",
-          description: `HackerAI Team Extra Usage Auto-Reload ($${amountCents / 100})`,
+          description: `Prozync AI Team Extra Usage Auto-Reload ($${amountCents / 100})`,
         },
         { idempotencyKey: `${operationId}:item` },
       );
@@ -349,7 +349,7 @@ export const createTeamPurchaseSession = action({
             price_data: {
               currency: "usd",
               product_data: {
-                name: "HackerAI Team Extra Usage Credits",
+                name: "Prozync AI Team Extra Usage Credits",
                 description: `$${args.amountDollars} in team extra usage credits`,
               },
               unit_amount: amountCents,

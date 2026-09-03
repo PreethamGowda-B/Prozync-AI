@@ -63,10 +63,10 @@ export function AgentUpgradeDialog({
           <DialogDescription>
             {isDesktopEnvironment
               ? desktopBridgeStatus === "failed"
-                ? "HackerAI Desktop is open, but its local sandbox could not connect."
+                ? "Prozync AI Desktop is open, but its local sandbox could not connect."
                 : desktopBridgeStatus === "connected"
-                  ? "HackerAI Desktop is connected and ready for local Agent mode."
-                  : "HackerAI Desktop is connecting its local sandbox."
+                  ? "Prozync AI Desktop is connected and ready for local Agent mode."
+                  : "Prozync AI Desktop is connecting its local sandbox."
               : "Connect a local sandbox for free, or upgrade for cloud Agent mode with higher limits."}
           </DialogDescription>
         </DialogHeader>

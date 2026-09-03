@@ -279,7 +279,7 @@ describe("file tool large text safety", () => {
       brief: "Read file",
     })) as { error: string };
 
-    expect(result.error).toContain("HackerAI did not switch this run to Cloud");
+    expect(result.error).toContain("Prozync AI did not switch this run to Cloud");
     expect(sandbox.files.read).not.toHaveBeenCalled();
     expect(commandRun).not.toHaveBeenCalled();
     expect(writerWrites).not.toContainEqual(

@@ -556,19 +556,19 @@ export const getAgentToolApprovalPromptTitle = ({
   fallback?: string;
 }): string | undefined => {
   if (operation === "terminal_execute") {
-    return "Allow HackerAI to run this terminal command?";
+    return "Allow Prozync AI to run this terminal command?";
   }
   if (operation === "terminal_interact") {
-    return "Allow HackerAI to interact with this terminal session?";
+    return "Allow Prozync AI to interact with this terminal session?";
   }
   if (operation === "file_write") {
-    return "Allow HackerAI to create this file?";
+    return "Allow Prozync AI to create this file?";
   }
   if (operation === "file_append") {
-    return "Allow HackerAI to append to this file?";
+    return "Allow Prozync AI to append to this file?";
   }
   if (operation === "file_edit") {
-    return "Allow HackerAI to edit this file?";
+    return "Allow Prozync AI to edit this file?";
   }
   return fallback;
 };
